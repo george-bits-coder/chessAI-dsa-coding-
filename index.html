@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Chess board</title>
+	<style>
+		body {
+			text-align: center;
+      
+		}
+
+		.cell {
+			height: 30px;
+			width: 30px;
+			border: 1.5px solid grey;
+			border-style: inset;
+     
+      text-align:center;
+		}
+
+		.blackcell {
+			background-color: grey;
+		}
+
+		.whitecell {
+			background-color: white;
+		}
+    .e1{
+    	
+     margin-bottom:4%;
+    }
+    
+	</style>
+</head>
+
+<body>
+  <h2>Mini chess solver AI</h2>
+<div id="vi"> <iframe src="https://giphy.com/embed/n6mEMqAuYOQ8l8qcEE" 
+width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>
+<a href="https://giphy.com/gifs/n6mEMqAuYOQ8l8qcEE"></a></p></div>
+  <p> Place N queens in N x N chessboard so that no queens attack each other</p>
+  <input id="q" type="number" placeholder="Kindly enter value of N"></input>
+
+  <button onclick= "oddeven()">Enter</button>
+	<br><br>
+
+	<script type="text/javascript">
+   	var center = document.createElement('center');
+     center.className="e1";
+   var haha=0;
+    function bf(N2,board){
+    
+  
+		// Create a center tag to center all the elements
+	
+       
+		// Create a table element
+		var ChessTable = document.createElement('table');
+		for (var i = 0; i < N2; i++) {
+
+			// Create a row
+			var tr = document.createElement('tr');
+			for (var j = 0; j < N2; j++) {
+
+				// Create a cell
+				var td = document.createElement('td');
+        
+        if(board[i][j]!=1){
+         var img1=document.createElement("img");
+          img1.src="https://i.postimg.cc/N0Dm50ry/3405-white-queen.png";
+          img1.style.height="30px";
+          img1.style.width="30px";
+          td.appendChild(img1);}
+
+				// If the sum of cell coordinates is even
+				// then color the cell white
+				if ((i + j) % 2 == 0) {
+
+					// Create a class attribute for all white cells
+					td.setAttribute('class', 'cell whitecell');
+          
+					tr.appendChild(td);
+				}
+
+				// If the sum of cell coordinates is odd then
+				// color the cell black
+				else {
+
+					// Create a class attribute for all black cells
+					td.setAttribute('class', 'cell blackcell');
+
+         
+          
+					// Append the cell to its row
+					tr.appendChild(td);
+				}
+			}
+
+			// Append the row
+			ChessTable.appendChild(tr);
+		}
+      var txt=document.createElement("p");
+      ++haha;
+      txt.textContent="Solution Combination " + haha;
+      
+		center.appendChild(ChessTable);
+    center.append(txt);
+		// Modifying table attribute properties
+		ChessTable.setAttribute('cellspacing', '0');
+		ChessTable.setAttribute('width', '270px');
+     
+		document.body.appendChild(center);
+    
+    
+    }//end of bigfunction
+    
+    //beginning of backtracking
+    
+    
+    function oddeven(){
+      center.innerHTML=null;
+      haha=0;
+     var N=document.getElementById("q").value;
+    
+    var board=[];
+    
+    for(var i=0;i<N;i++)
+      board.push([]);
+    
+    for(var i=0;i<N;i++)
+      for(var j=0;j<N;j++)
+        board[i][j]=0;
+        
+    // console.log(board[2]);
+    
+    var count=0;
+    
+    function prin(r,c,board){
+        
+        if(r+1==N){
+        count++;
+          bf(N,board);
+     //   console.log(board);
+        }
+        board[r][c]=4;
+        for(var m=0;m<N;m++)
+           board[m][c]=1;
+         for(var m=0;m<N;m++)
+           board[r][m]=1;
+           
+           board[r][c]=4;
+          
+           var j2=c-1;
+           var j1=r+1;
+           while(j1<N && j2>=0)
+           {
+               board[j1][j2]=1;
+               j1++;
+               j2--;
+           }
+           
+            var j2=c+1;
+           var j1=r+1;
+           while(j1<N && j2<N)
+           {
+               board[j1][j2]=1;
+               j1++;
+               j2++;
+           }
+         //  console.log(board);
+           
+           for(var u=0;u<N;u++)
+           if(r<N-1)
+           if(board[r+1][u]==0)
+           {
+               var bd=[];
+               for(var oo=0;oo<N;oo++)
+               bd.push([]);
+               
+               for(var s1=0;s1<N;s1++)
+                  for(var s2=0;s2<N;s2++)
+                     bd[s1][s2]=board[s1][s2];
+              prin(r+1,u,bd);
+              
+              
+           }
+    }
+    
+    for(var h=0;h<N;h++)
+    {
+        
+       var board=[];
+    
+    for(var i=0;i<N;i++)
+      board.push([]);
+    
+    for(var i=0;i<N;i++)
+      for(var j=0;j<N;j++)
+        board[i][j]=0;
+        
+      prin(0,h,board);
+      
+    }
+    
+     // document.body.appendChild("total  combinations");
+    console.log(count);
+}
+	</script>
+</body>
+
+</html>
