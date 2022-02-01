@@ -9,4 +9,4 @@ user can enter value of N and visualize all the combinations where N queens can 
 Live deployment link https://george-bits-coder.github.io/chessAI-dsa-coding-/
 
 
-Single person project Completed in 3 hours
+Single person project completed in 3 hours
